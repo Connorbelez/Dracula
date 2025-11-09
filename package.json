@@ -1,10 +1,10 @@
 {
-    "name": "theme-dracula",
-    "version": "2.25.1",
-    "displayName": "Dracula Theme Official",
-    "homepage": "https://draculatheme.com/",
-    "description": "The official Dracula Theme: a dark theme for many editors, shells, and more. 🦇",
-    "publisher": "dracula-theme",
+    "name": "dracula-enhanced",
+    "version": "1.0.0",
+    "displayName": "Dracula Enhanced",
+    "homepage": "https://github.com/connor/dracula-enhanced",
+    "description": "Enhanced Dracula theme with improved semantic highlighting for parameters and properties. 🦇",
+    "publisher": "connor",
     "license": "MIT",
     "scripts": {
         "build": "node ./scripts/build.js",
@@ -14,24 +14,17 @@
         "vsce-publish": "vsce publish"
     },
     "maintainers": [
-        "Derek Sifford",
-        "Lucas de França (luxonauta)",
-        "Zeno Rocha"
+        "Connor"
     ],
     "contributors": [
-        "Krzysztof Wisznarewski",
-        "Daniel Ramos",
-        "Eric Jackson",
-        "Elliott Pogue",
-        "Ajit Singh",
-        "Teddy Bradford"
+        "Connor"
     ],
     "repository": {
         "type": "git",
-        "url": "https://github.com/dracula/visual-studio-code.git"
+        "url": "https://github.com/connor/dracula-enhanced.git"
     },
     "bugs": {
-        "url": "https://github.com/dracula/visual-studio-code/issues"
+        "url": "https://github.com/connor/dracula-enhanced/issues"
     },
     "engines": {
         "vscode": "^1.13.0"
@@ -43,7 +36,11 @@
         "dracula",
         "dark",
         "theme",
-        "color-theme"
+        "color-theme",
+        "enhanced",
+        "semantic",
+        "typescript",
+        "javascript"
     ],
     "icon": "icon.png",
     "galleryBanner": {
@@ -53,12 +50,12 @@
     "contributes": {
         "themes": [
             {
-                "label": "Dracula Theme",
+                "label": "Dracula Enhanced",
                 "uiTheme": "vs-dark",
                 "path": "./theme/dracula.json"
             },
             {
-                "label": "Dracula Theme Soft",
+                "label": "Dracula Enhanced Soft",
                 "uiTheme": "vs-dark",
                 "path": "./theme/dracula-soft.json"
             }
@@ -69,10 +66,5 @@
         "prettier": "^3.0.0",
         "tinycolor2": "^1.6.0",
         "vsce": "^2.15.0"
-    },
-    "__metadata": {
-        "id": "4e44877c-1c8d-4f9c-ba86-1372d0fbeeb1",
-        "publisherDisplayName": "Dracula Theme",
-        "publisherId": "fbb3d024-f8f2-460c-bdb5-99552f6d8c4b"
     }
 }

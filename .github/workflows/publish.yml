@@ -1,0 +1,74 @@
+name: Publish to VSCode Marketplace
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to publish (e.g., 1.0.0)'
+        required: true
+        type: string
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+        continue-on-error: true
+
+      - name: Build theme
+        run: npm run build
+
+      - name: Verify build output
+        run: |
+          if [ ! -f "theme/dracula.json" ]; then
+            echo "Error: theme/dracula.json not found"
+            exit 1
+          fi
+          if [ ! -f "theme/dracula-soft.json" ]; then
+            echo "Error: theme/dracula-soft.json not found"
+            exit 1
+          fi
+          echo "Build verification successful"
+
+      - name: Package extension
+        run: npm run package
+
+      - name: Publish to VSCode Marketplace
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: |
+          npx vsce publish -p $VSCE_PAT
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dracula-enhanced-${{ github.ref_name }}
+          path: bin/*.vsix
+          retention-days: 30
+
+      - name: Create GitHub Release
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: bin/*.vsix
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
